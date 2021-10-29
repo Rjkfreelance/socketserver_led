@@ -8,7 +8,8 @@ app.use(express.static('public'))
 var flagLed = 0
 var delay_blink = 1000
 
-const WPort = '4000'
+//const WPort = '4000'
+const WPort = process.env.PORT || 4000;
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname+'public/index.html'))
