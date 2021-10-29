@@ -32,8 +32,8 @@
 
        </div>
         
-        <script src="/socket.io/socket.io.js"></script>
-        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>-->
+        <!--<script src="/socket.io/socket.io.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
        
         <script>
@@ -72,11 +72,12 @@
             })
            
 
-    var socket = io.connect('https://socketserverled.herokuapp.com/:4000');
+    var socket = io.connect('https://socketserverled.herokuapp.com');
      //var socket = io.connect('http://192.168.2.80:4000');
     socket.on('connect',function(data) {
                 socket.emit('join','client connect');
                 socket.emit('join','RJK');
+                
             });
             socket.on('chipid',function(data) {
               console.log(data)
@@ -92,6 +93,8 @@
                 let st = res.status
                 console.log(st)  
                 m = Number(st) 
+                
+
                 if(st == '0'){
                  
                    $('#led_state2').empty()
@@ -124,6 +127,10 @@
                  updateInterval = Number(rev.seta);
                  $('#tbnow').html(rev.seta)
             })
+
+               
+
+
 
 </script>
 <script src="canvasjs.min.js"></script>
