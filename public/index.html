@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Socket.IO-MCU</title>
+        <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1">
+       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      
+    </head>
+    <body>
+        
+       <div class="container">
+        <div class="card bg-light text-dark" style="margin-top: 10px;">
+            <div class="card-body">Socket IO Test&nbsp;<h3>Chip ID:&nbsp;<span id='chd'></span></h3>
+                 
+                 <h3>สถานะ LED&nbsp;<span id='led_state1'></span><span id='led_state2'></span>
+                    <label id='blk'></label></h3>
+                 <h4>MCU WiFi RSSI:&nbsp;<span id='rssi'></span>&nbsp;dBm</h4>  
+                 <form>
+                   <div class="form-group">
+                       <label for="rawd">สถานะข้อมูล:<span style="color:blue;">ปรับเวลากระพิบ:<input type="text" size="5" id='timer'></span><button id='tblk'>Set</button>&nbsp;ค่าหน่วงเวลา <span id='tbnow' style="color:red;"></span>&nbsp;ms</label>
+                         <textarea class="form-control" cols="10" rows="6" id="rawd" style="color:white;background-color:navy;overflow:auto;"></textarea>
+                   </div>
+                   <button id='cls'>Clear Screen</button>
+                   <button id='rst'>Reset MCU</button>
+                 </form>
+            </div>
+            <div id="chartArea1" style="height: 340px; width: 100%;"></div>
+
+       </div>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>-->
+        <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+       
+        <script>
+            var m = 0
+            var updateInterval = 1000;
+            function gettime(){
+
+               var dmm = new Date();
+                 var n = dmm.getTime();
+                  return n
+            }
+            function Clscreen() {
+                $('#rawd').empty()
+            }
+            function SendResetMCU() {
+                socket.emit('mcureset','RST');
+            }
+            function SetBlinkTime(tb){
+                socket.emit('setTimeled',tb);
+            }
+
+            $(function() {
+                $('#cls').click(function(){
+                    Clscreen()
+                })
+                $('#rst').click(function(){
+                    SendResetMCU()
+                })
+               $('#tblk').click(function(){
+                    let t = $('#timer').val()
+                     //if(t != NULL || t != '0'){
+                       SetBlinkTime(t)
+                     //}
+                })
+                garea1()
+            })
+           
+
+    var socket = io.connect('http://localhost:4000');
+     //var socket = io.connect('http://192.168.2.80:4000');
+    socket.on('connect',function(data) {
+                socket.emit('join','client connect');
+                socket.emit('join','RJK');
+            });
+            socket.on('chipid',function(data) {
+              console.log(data)
+              $('#chd').html(data.cid)
+
+            })
+            socket.on('rawdata',function(data) {
+              $('#rawd').html(data.rda)
+
+            })
+
+            socket.on('Lednow',function(res) {
+                let st = res.status
+                console.log(st)  
+                m = Number(st) 
+                if(st == '0'){
+                 
+                   $('#led_state2').empty()
+                   $('#led_state1').html('ติด').css({ 'color': 'blue'})
+                   $('#blk').addClass("label info");
+                   document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                } 
+                
+                if(st == '1'){
+                   
+
+                    $('#led_state1').empty()
+                    $('#led_state2').html('ดับ').css({ 'color': 'red'})
+                    document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                }
+                   
+             });
+            socket.on('PReset',function(rev) {
+                 console.log(rev.prst)
+                 alert('เตรียม Reset MCU: '+rev.prst)
+            })
+            socket.on('RSSI',function(rev) {
+                 console.log(rev.wifi)
+                 
+                 $('#rssi').html(rev.wifi).css({ 'color': 'navy'})
+            })
+
+            socket.on('setalready',function(rev) {
+                 console.log(rev.seta)
+                 updateInterval = Number(rev.seta);
+                 $('#tbnow').html(rev.seta)
+            })
+
+</script>
+<script src="canvasjs.min.js"></script>
+
+
+<<script type="text/javascript">
+var dataPoints1 
+var xtime
+
+
+function gettime(){
+
+  var dmm = new Date();
+  var n = dmm.getTime();
+  return n
+}
+
+garea1 = function () {
+console.log(updateInterval)
+xtime = gettime()
+
+dataPoints1 = [{'x':xtime,'y':m}];
+
+var xValue = xtime
+
+var chartAr1 = new CanvasJS.Chart("chartArea1", {
+  animationEnabled: true,
+  theme: "dark1",
+  title:{
+    text: "ค่าสถานะ LED ที่ MCU Realtime"
+  },
+  axisX: {
+    valueFormatString: "DD MMM YYYY HH mm ss"
+  },
+  axisY: {
+    title: "LED Value",
+    maximum: 1
+  },
+  data: [{
+    type: "line",
+    color: "#EFF82E",
+     xValueType: "dateTime",
+      yValueFormatString: "#,###"+"<span> units</span>",
+
+      xValueFormatString: "hh:mm:ss TT",
+      showInLegend: true,
+    dataPoints:dataPoints1
+  }]
+
+});
+ 
+chartAr1.render()
+
+setInterval(function () { updateChart() }, updateInterval);
+
+
+ function updateChart() {
+  xValue += updateInterval
+  yValue = m
+ 
+  // pushing the new values
+  dataPoints1.push({
+    x: xValue,
+    y: yValue
+  });
+  
+      chartAr1.render();   
+    
+  }
+
+
+}
+</script>
+</div>
+</body>
+</html>
