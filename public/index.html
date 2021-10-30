@@ -50,6 +50,8 @@
             function Clscreen() {
                 $('#rawd').empty()
             }
+            var textarea = document.getElementById('rawd');
+              textarea.scrollTop = textarea.scrollHeight;
             function SendResetMCU() {
                 socket.emit('mcureset','RST');
             }
