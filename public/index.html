@@ -40,7 +40,7 @@
             var m = 0
             var updateInterval = 1000;
             var flaggrp
-
+            var textarea = document.getElementById('rawd')
             function gettime(){
 
                var dmm = new Date();
@@ -73,10 +73,10 @@
                      //}
                 })
                 
-                var textarea = document.getElementById('rawd')
-                 if(textarea.selectionStart == textarea.selectionEnd){
-                     textarea.scrollTop = textarea.scrollHeight
-                 }
+                
+                     if(textarea.selectionStart == textarea.selectionEnd){
+                       textarea.scrollTop = textarea.scrollHeight
+                    }
 
                    garea1()
                         
@@ -110,15 +110,17 @@
                    $('#led_state2').empty()
                    $('#led_state1').html('ติด').css({ 'color': 'blue'})
                    $('#blk').addClass("label info");
-                   document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                   
+                   //document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                   textarea.value += st +'&nbsp;'
                 } 
                 
                 if(st == '1'){
                    
-
                     $('#led_state1').empty()
                     $('#led_state2').html('ดับ').css({ 'color': 'red'})
-                    document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                    //document.getElementById('rawd').innerHTML += st + '&nbsp;'
+                    textarea.value += st +'&nbsp;'
                 }
                  
              });
