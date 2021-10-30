@@ -74,11 +74,7 @@
                 })
                 
                 
-                     if(textarea.selectionStart == textarea.selectionEnd){
-                       textarea.scrollTop = textarea.scrollHeight
-                    }
-
-                   garea1()
+                garea1()
                         
             })
            
@@ -110,9 +106,11 @@
                    $('#led_state2').empty()
                    $('#led_state1').html('ติด').css({ 'color': 'blue'})
                    $('#blk').addClass("label info");
-                   
+                    
                    //document.getElementById('rawd').innerHTML += st + '&nbsp;'
+
                    textarea.value += st +''
+                   
                 } 
                 
                 if(st == '1'){
@@ -120,9 +118,13 @@
                     $('#led_state1').empty()
                     $('#led_state2').html('ดับ').css({ 'color': 'red'})
                     //document.getElementById('rawd').innerHTML += st + '&nbsp;'
+
                     textarea.value += st +''
+
                 }
-                 
+                 if(textarea.selectionStart == textarea.selectionEnd){
+                       textarea.scrollTop = textarea.scrollHeight
+                    }
              });
             socket.on('PReset',function(rev) {
                  console.log(rev.prst)
