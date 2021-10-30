@@ -39,6 +39,7 @@
         <script>
             var m = 0
             var updateInterval = 1000;
+            var flagshowg = false
             function gettime(){
 
                var dmm = new Date();
@@ -68,7 +69,7 @@
                        SetBlinkTime(t)
                      //}
                 })
-                //garea1()
+              if (flagshowg) garea1()
             })
            
 
@@ -94,7 +95,8 @@
                 console.log(st)  
                 m = Number(st) 
                 
-
+                flagshowg = true
+                
                 if(st == '0'){
                  
                    $('#led_state2').empty()
@@ -110,7 +112,7 @@
                     $('#led_state2').html('ดับ').css({ 'color': 'red'})
                     document.getElementById('rawd').innerHTML += st + '&nbsp;'
                 }
-                   garea1()
+                   
              });
             socket.on('PReset',function(rev) {
                  console.log(rev.prst)
