@@ -69,7 +69,9 @@
                        SetBlinkTime(t)
                      //}
                 })
-             
+              if (flagshowg == true) {
+                   garea1()
+                }        
             })
            
 
@@ -124,13 +126,12 @@
 
             socket.on('setalready',function(rev) {
                  console.log(rev.seta)
+                 
                  updateInterval = Number(rev.seta);
                  $('#tbnow').html(rev.seta)
             })
 
-        if (flagshowg == true) {
-                   garea1()
-                }        
+       
 
 
 
