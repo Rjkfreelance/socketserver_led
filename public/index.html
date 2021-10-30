@@ -21,7 +21,7 @@
                  <h4>MCU WiFi RSSI:&nbsp;<span id='rssi'></span>&nbsp;dBm</h4>  
                  <form>
                    <div class="form-group">
-                       <label for="rawd">สถานะข้อมูล:<span style="color:blue;">ปรับเวลากระพิบ:<input type="text" size="5" id='timer'></span><button id='tblk'>Set</button>&nbsp;ค่าหน่วงเวลา <span id='tbnow' style="color:red;"></span>&nbsp;ms</label>
+                       <label for="rawd">สถานะข้อมูล:<span style="color:blue;">ปรับเวลากระพิบ:<input type="text" size="5" id='timer'></span><button id='tblk'>Set</button>&nbsp;ค่าหน่วงเวลา <span id='tbnow' style="color:red;"></span>&nbsp;ms&nbsp;(1 = off,0 = on)</label>
                          <textarea class="form-control" cols="10" rows="2" id="rawd" style="color:white;background-color:navy;"></textarea>
                    </div>
                    <button id='cls'>Clear Screen</button>
@@ -137,9 +137,9 @@
             })
 
             socket.on('setalready',function(rev) {
-                 console.log(rev.seta)
+                 //console.log(rev.seta)
                  updateInterval = Number(rev.seta);
-                  
+                
                  $('#tbnow').html(rev.seta)
             })
 
