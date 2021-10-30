@@ -39,7 +39,8 @@
         <script>
             var m = 0
             var updateInterval = 1000;
-            var flagshowg = 0
+            var flaggrp = false
+
             function gettime(){
 
                var dmm = new Date();
@@ -69,9 +70,9 @@
                        SetBlinkTime(t)
                      //}
                 })
-              //if (flagshowg == 1) {
+              
                    garea1()
-                //}        
+                        
             })
            
 
@@ -96,9 +97,9 @@
                 let st = res.status
                 console.log(st)  
                 m = Number(st) 
-                
+                flaggrp = true
                 if(st == '0'){
-                   flagshowg = 1
+                  
                    $('#led_state2').empty()
                    $('#led_state1').html('ติด').css({ 'color': 'blue'})
                    $('#blk').addClass("label info");
@@ -106,13 +107,13 @@
                 } 
                 
                 if(st == '1'){
-                    flagshowg = 1
+                   
 
                     $('#led_state1').empty()
                     $('#led_state2').html('ดับ').css({ 'color': 'red'})
                     document.getElementById('rawd').innerHTML += st + '&nbsp;'
                 }
-                 console.log(flagshowg)  
+                 
              });
             socket.on('PReset',function(rev) {
                  console.log(rev.prst)
@@ -126,9 +127,9 @@
 
             socket.on('setalready',function(rev) {
                  console.log(rev.seta)
-                 if(flagshowg == 1){
-                    updateInterval = Number(rev.seta);
-                  }
+                   if(flaggrp == true)
+                      updateInterval = Number(rev.seta);
+                  
                  $('#tbnow').html(rev.seta)
             })
 
