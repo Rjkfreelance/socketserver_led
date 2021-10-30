@@ -51,10 +51,7 @@
                 $('#rawd').empty()
             }
 
-            var textarea = document.getElementById('rawd')
-            if(textarea.selectionStart == textarea.selectionEnd) {
-               textarea.scrollTop = textarea.scrollHeight
-             }
+            
             function SendResetMCU() {
                 socket.emit('mcureset','RST');
             }
@@ -75,7 +72,12 @@
                        SetBlinkTime(t)
                      //}
                 })
-              
+                
+                var textarea = document.getElementById('rawd')
+                 if(textarea.selectionStart == textarea.selectionEnd){
+                     textarea.scrollTop = textarea.scrollHeight
+                 }
+
                    garea1()
                         
             })
