@@ -127,8 +127,7 @@
 
             socket.on('setalready',function(rev) {
                  console.log(rev.seta)
-                   if(flaggrp == true)
-                      updateInterval = Number(rev.seta);
+                 updateInterval = Number(rev.seta);
                   
                  $('#tbnow').html(rev.seta)
             })
@@ -187,9 +186,13 @@ var chartAr1 = new CanvasJS.Chart("chartArea1", {
 
 });
  
+
 chartAr1.render()
 
-setInterval(function () { updateChart() }, updateInterval);
+if(flaggrp == true){
+    setInterval(function () { updateChart() }, updateInterval);
+}
+  
 
 
  function updateChart() {
