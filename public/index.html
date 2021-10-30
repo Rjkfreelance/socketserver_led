@@ -68,7 +68,7 @@
                        SetBlinkTime(t)
                      //}
                 })
-                garea1()
+                //garea1()
             })
            
 
@@ -110,7 +110,7 @@
                     $('#led_state2').html('ดับ').css({ 'color': 'red'})
                     document.getElementById('rawd').innerHTML += st + '&nbsp;'
                 }
-                   
+                   garea1()
              });
             socket.on('PReset',function(rev) {
                  console.log(rev.prst)
