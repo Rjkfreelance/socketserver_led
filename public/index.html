@@ -39,7 +39,7 @@
         <script>
             var m = 0
             var updateInterval = 1000;
-            var flaggrp = false
+            var flaggrp
 
             function gettime(){
 
@@ -190,6 +190,7 @@ var chartAr1 = new CanvasJS.Chart("chartArea1", {
 chartAr1.render()
 
 if(flaggrp == true){
+
     setInterval(function () { updateChart() }, updateInterval);
 }
   
