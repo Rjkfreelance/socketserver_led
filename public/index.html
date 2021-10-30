@@ -22,7 +22,7 @@
                  <form>
                    <div class="form-group">
                        <label for="rawd">สถานะข้อมูล:<span style="color:blue;">ปรับเวลากระพิบ:<input type="text" size="5" id='timer'></span><button id='tblk'>Set</button>&nbsp;ค่าหน่วงเวลา <span id='tbnow' style="color:red;"></span>&nbsp;ms</label>
-                         <textarea class="form-control" cols="10" rows="4" id="rawd" style="color:white;background-color:navy;overflow:auto;"></textarea>
+                         <textarea class="form-control" cols="10" rows="2" id="rawd" style="color:white;background-color:navy;"></textarea>
                    </div>
                    <button id='cls'>Clear Screen</button>
                    <button id='rst'>Reset MCU</button>
@@ -142,10 +142,6 @@
                   
                  $('#tbnow').html(rev.seta)
             })
-
-       
-
-
 
 </script>
 <script src="canvasjs.min.js"></script>
